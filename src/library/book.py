@@ -5,3 +5,7 @@ class Book:
         self.title = title
         self.book_id = book_id
         self.status = status
+        
+    def borrow(self, borrower_name):
+        self.status = "borrowed"
+        self.borrower = borrower_name
