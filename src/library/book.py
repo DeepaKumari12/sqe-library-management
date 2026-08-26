@@ -6,6 +6,8 @@ class Book:
         self.book_id = book_id
         self.status = status
         
-    def borrow(self, borrower_name):
+       def borrow(self, borrower_name):
+        if self.status == "borrowed":
+            raise ValueError(f"Book '{self.title}' is already borrowed.")
         self.status = "borrowed"
         self.borrower = borrower_name
