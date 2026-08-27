@@ -40,16 +40,16 @@ This diagram shows how a change moves through the development lifecycle, and whe
 
 **Key QA touchpoints:** Issue triage (clarity & severity), PR review (the most critical gate), CI check monitoring, and pre-release verification. Catching defects earlier is far cheaper than catching them after release.
 
-## Lab 2 — Task 3: Merge Conflict Documentation
+## Lab 2 — Task 4: Commit Hygiene Audit
 
-**What caused the conflict:**
-Two branches (`feature/rename-field-a` and `feature/rename-field-b`) were both created from the same commit and both modified the same line in `src/library/book.py` — the constructor parameter originally named `book_id`. Branch A renamed it to `item_id` and was merged into `main` first. Branch B, created from the same starting point, independently renamed the identical field to `catalog_id`. When Branch B was compared against the now-updated `main`, Git could not automatically determine which rename should win because both branches had diverged from the same original line with two different, non-identical changes.
+**Last 10 commits (via `git log --oneline -10`):**
 
-**How it was resolved:**
-1. Attempted to open a PR for `feature/rename-field-b` on GitHub — GitHub reported "Can't automatically merge."
-2. Ran `git checkout feature/rename-field-b` followed by `git merge main` locally, which produced a real merge conflict in `src/library/book.py`.
-3. Opened the file, located the conflict markers, and manually chose to keep `main`'s version (`item_id`), since that branch had already been merged and represented the agreed-upon name.
-4. Removed all conflict markers, saved the file, then ran `git add`, `git commit`, and `git push` to push the resolved merge commit.
-5. The PR then showed "Able to merge" and was merged normally with Squash and merge.
+**Rewritten commit messages:**
 
-**Key takeaway:** Merge conflicts happen when two branches edit the same line differently after diverging from a shared ancestor. Resolving them requires a human decision about which change should survive — Git cannot guess intent.
+1. **Original:** `Add borrow capability to Book (#11)`
+   **Rewritten:** `feat(library): add Book.borrow() method with double-borrow validation`
+   **Why it's better:** The original has no Conventional Commits type or scope, so tooling (changelog generators, semantic-release) cannot classify it as a feature. The rewritten version identifies the change type (`feat`), the affected area (`library`), and briefly states what the change does, making the history searchable and machine-parseable.
+
+2. **Original:** `Merge pull request #6 from DeepaKumari12/docs/readme-and-contributing`
+   **Rewritten:** `docs: merge README and CONTRIBUTING updates into main`
+   **Why it's better:** GitHub's auto-generated merge message only names the branch, not the actual content of the change. The rewritten version uses the `docs` type and plainly states what was merged, so anyone scanning the log later understands the change without needing to open the PR.
