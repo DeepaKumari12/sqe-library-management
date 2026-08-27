@@ -1,9 +1,9 @@
 class Book:
     """Minimal Book class stub for the Library Management System."""
 
-    def __init__(self, title, catalog_id, status="available"):
+    def __init__(self, title, item_id, status="available"):
         self.title = title
-        self.catalog_id = catalog_id
+        self.item_id = item_id
         self.status = status
 
     def borrow(self, borrower):
