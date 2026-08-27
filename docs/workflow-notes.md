@@ -43,6 +43,16 @@ This diagram shows how a change moves through the development lifecycle, and whe
 ## Lab 2 — Task 4: Commit Hygiene Audit
 
 **Last 10 commits (via `git log --oneline -10`):**
+f63f86f docs: document merge conflict cause and resolution for Task 3
+b8f6c4e refactor(library): rename book_id to catalog_id (#13)
+8c20c0b refactor(library): rename book_id to item_id (#12)
+7332d7d Add borrow capability to Book (#11)
+40e7a23 docs: add complete Lab 1 Task 5 workflow reflection diagram
+72b7e4a docs: add Lab 1 Task 5 workflow reflection diagram
+664c070 fix: move pull_request_template.md to correct .github location
+7d8eb1c Merge pull request #6 from DeepaKumari12/docs/readme-and-contributing
+7d50807 docs: expand README and add CONTRIBUTING guidelines
+55a1406 chore: initial project structure
 
 **Rewritten commit messages:**
 
