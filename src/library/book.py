@@ -1,23 +1,17 @@
-class Book:
-    """Minimal Book class stub for the Library Management System."""
+def borrow(self, borrower):
+    """Mark this book as borrowed by the given borrower.
 
-    def __init__(self, title, item_id, status="available"):
-        self.title = title
-        self.item_id = item_id
-        self.status = status
-
-    def borrow(self, borrower):
-        """Mark this book as borrowed by the given borrower.
-
-        Raises:
-            ValueError: if the book is already borrowed.
-        """
-        if self.status == "borrowed":
-            raise ValueError(f"Book '{self.title}' is already borrowed.")
-        self.status = "borrowed"
-        self.borrower = borrower
-
-    def return_book(self):
-        """Mark this book as available and clear the borrower."""
-        self.status = "available"
-        self.borrower = None
+    Raises:
+        ValueError: if the book is already borrowed or borrower name is empty.
+    """
+    # Validation: Check if borrower name is empty or None
+    if not borrower or borrower.strip() == "":
+        raise ValueError("Borrower name cannot be empty.")
+    
+    # Check if book is already borrowed
+    if self.status == "borrowed":
+        raise ValueError(f"Book '{self.title}' is already borrowed.")
+    
+    # Borrow the book
+    self.status = "borrowed"
+    self.borrower = borrower
