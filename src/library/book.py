@@ -8,8 +8,8 @@ def borrow(self, borrower):
     if not borrower or borrower.strip() == "":
         raise ValueError("Borrower name cannot be empty.")
     
-    # Check if book is already borrowed
-    if self.status == "borrowed":
+    # Strict check: Prevent double-borrowing via attribute manipulation
+    if self.status == "borrowed" or self.borrower is not None:
         raise ValueError(f"Book '{self.title}' is already borrowed.")
     
     # Borrow the book
