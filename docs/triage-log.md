@@ -13,18 +13,23 @@
 ## Triage Rationale
 
 ### 1. Issue #17 — Critical / P0
+
 This issue is ranked first because borrowed books cannot be returned at all. It has critical technical impact and P0 priority, so it must be fixed immediately.
 
 ### 2. Issue #15 — High / P1
+
 This issue can allow double-borrowing and bypass the intended borrowing status check. It has high severity and P1 priority because it can cause incorrect library records and should be fixed quickly.
 
 ### 3. Issue #16 — High / P2
+
 Duplicate item_id values can create confusion between books and may result in incorrect book records. It is high severity, but its P2 priority places it below the more urgent P0 and P1 issues.
 
 ### 4. Issue #19 — Medium / P2
+
 Case-sensitive borrower name comparison can create inconsistent borrower records. Its severity is medium and the problem does not prevent the main borrowing workflow, so it is deferred for this sprint.
 
 ### 5. Issue #18 — Low / P3
+
 Allowing an empty book title is undesirable but has low technical impact. Since it is P3, it is the lowest priority and will not be fixed in this sprint.
 
 ## Severity vs Priority Trade-offs
