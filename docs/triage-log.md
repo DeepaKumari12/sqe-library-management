@@ -1,4 +1,4 @@
-| Rank | Issue | Severity | Priority | Decision |
+| **Rank** | **Issue** | **Severity** | **Priority** | **Decision** |
 |---|---|---|---|---|
 | 1 | #17 — No `return_book()` method exists — borrowed books can never be returned | Critical | P0 | Fix this sprint |
 | 2 | #15 — `borrow()` allows double-borrowing to bypass status check via direct attribute assignment | High | P1 | Fix this sprint |
