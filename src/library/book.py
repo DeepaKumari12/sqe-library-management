@@ -16,3 +16,8 @@ class Book:
             raise ValueError(f"Book '{self.title}' is already borrowed.")
         self.status = "borrowed"
         self.borrower = borrower
+
+    def return_book(self):
+        """Mark this book as available and clear the borrower."""
+        self.status = "available"
+        self.borrower = None
