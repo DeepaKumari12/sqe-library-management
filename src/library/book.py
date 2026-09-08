@@ -18,7 +18,7 @@ class Book:
         if not borrower or borrower.strip() == "":
             raise ValueError("Borrower name cannot be empty.")
 
-        # Strict check: Prevent double-borrowing
+        # Strict check: Prevent double-borrowing via attribute manipulation
         if self.status == "borrowed" or self.borrower is not None:
             raise ValueError(f"Book '{self.title}' is already borrowed.")
 
