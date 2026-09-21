@@ -37,3 +37,29 @@ validate_isbn returns True / False (it does not raise an exception).
 |---|---|---|---|
 | Length 13 | 12 digits -> False | 13 digits -> True | 14 digits -> False |
 | Extra points | 11 digits -> False | - | 15 digits -> False |
+
+## 4. fine_tier() - values immediately next to the boundaries (non-integer days)
+
+BVA also checks the values just below/above a cut-off. For a numeric input this includes fractional values.
+
+| Boundary | Input | Expected | Actual before fix |
+|---|---|---|---|
+| 0 / 1 | 0.5 | rejected (TypeError) | 'Severe' (wrong) |
+| 0 / 1 | 0.99 | rejected (TypeError) | 'Severe' (wrong) |
+| 7 / 8 | 7.5 | rejected (TypeError) | 'Severe' (wrong) |
+| 14 / 15 | 14.5 | rejected (TypeError) | 'Severe' (wrong) |
+| 30 / 31 | 30.5 | rejected (TypeError) | 'Severe' (wrong) |
+
+Test: `test_fine_tier_fractional_days_rejected` in `tests/test_fine_tier_bva.py`.
+
+## Defect log (found through boundary testing)
+
+| # | Function | Boundary | Expected | Actual (before fix) | Root cause | Fix | Issue / PR |
+|---|---|---|---|---|---|---|---|
+| 1 | fine_tier | 0.5, 0.99, 7.5, 14.5, 30.5 | reject non-integer days | returned 'Severe' | tier ranges cover whole numbers only, so fractions fall in the gaps and reach the final `return "Severe"` | fine_tier raises TypeError if days_overdue is not an int | Issue #28, fixed in PR #29 |
+| - | Library.borrow_book | 4, 5, 6 books | as per table 2 | as per table 2 | - | no defect found | - |
+| - | validate_isbn | lengths 11-15 | as per table 3 | as per table 3 | - | no defect found | - |
+
+## Result
+
+pytest -v: all 41 tests pass (Lab 5 EP tests + Lab 6 BVA tests) after the fix.
