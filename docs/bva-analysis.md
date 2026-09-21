@@ -27,3 +27,13 @@ The limit is MAX_BOOKS_PER_MEMBER = 5. A member who already holds 5 books must b
 | limit + 1 | 6 | raises ValueError, count stays 6 |
 
 Note: a member cannot reach 6 books through borrow_book(), so the test sets library.member_loans["M1"] = 6 directly.
+
+
+## 3. validate_isbn(isbn) - exactly 13 digits
+
+validate_isbn returns True / False (it does not raise an exception).
+
+| Boundary | value-1 -> expected | value -> expected | value+1 -> expected |
+|---|---|---|---|
+| Length 13 | 12 digits -> False | 13 digits -> True | 14 digits -> False |
+| Extra points | 11 digits -> False | - | 15 digits -> False |

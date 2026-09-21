@@ -11,3 +11,17 @@ from library.library import validate_isbn
 ])
 def test_validate_isbn_classes(isbn, expected):
     assert validate_isbn(isbn) == expected
+
+    # ---------------------------------------------------------------
+# Lab 6 - Boundary Value Analysis: ISBN must be exactly 13 digits
+# ---------------------------------------------------------------
+@pytest.mark.parametrize('length,expected', [
+    (11, False),  # limit - 2
+    (12, False),  # limit - 1
+    (13, True),   # limit (exactly 13 digits)
+    (14, False),  # limit + 1
+    (15, False),  # limit + 2
+])
+def test_validate_isbn_length_boundaries(length, expected):
+    isbn = '9' * length
+    assert validate_isbn(isbn) == expected
