@@ -15,3 +15,15 @@ Negative values raise ValueError. Cut-off values in the code: 0, 1, 8, 15, 31.
 | 7 / 8 | 7 -> 'Low' | 8 -> 'Medium' | 9 -> 'Medium' |
 | 14 / 15 | 14 -> 'Medium' | 15 -> 'High' | 16 -> 'High' |
 | 30 / 31 | 30 -> 'High' | 31 -> 'Severe' | 32 -> 'Severe' |
+
+## 2. Library.borrow_book() - books-on-loan limit (0 to 5 valid)
+
+The limit is MAX_BOOKS_PER_MEMBER = 5. A member who already holds 5 books must be rejected with ValueError.
+
+| Boundary | Books currently on loan | Attempt: borrow one more -> expected |
+|---|---|---|
+| limit - 1 | 4 | succeeds, count becomes 5 |
+| limit | 5 | raises ValueError, count stays 5 |
+| limit + 1 | 6 | raises ValueError, count stays 6 |
+
+Note: a member cannot reach 6 books through borrow_book(), so the test sets library.member_loans["M1"] = 6 directly.
