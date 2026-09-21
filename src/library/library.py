@@ -1,5 +1,7 @@
 def fine_tier(days_overdue):
     """Map days overdue to a fine tier label."""
+    if not isinstance(days_overdue, int):
+        raise TypeError("days_overdue must be a whole number of days.")
     if days_overdue < 0:
         raise ValueError("days_overdue cannot be negative.")
     if days_overdue == 0:
@@ -36,3 +38,5 @@ class Library:
 def validate_isbn(isbn):
     """Validate that isbn is exactly 13 numeric digits."""
     return isinstance(isbn, str) and len(isbn) == 13 and isbn.isdigit()
+
+    

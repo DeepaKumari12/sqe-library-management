@@ -32,3 +32,10 @@ def test_fine_tier_just_below_domain_raises():
 ])
 def test_fine_tier_boundary_15(days, expected):
     assert fine_tier(days) == expected
+
+    # Values immediately next to the cut-offs (0/1, 7/8, 14/15, 30/31).
+# days_overdue must be a whole number, so fractions must be rejected.
+@pytest.mark.parametrize('days', [0.5, 0.99, 7.5, 14.5, 30.5])
+def test_fine_tier_fractional_days_rejected(days):
+    with pytest.raises(TypeError):
+        fine_tier(days)
