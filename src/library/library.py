@@ -1,3 +1,8 @@
+class LibraryIOError(Exception):
+    """Raised when the library catalog cannot be written to disk."""
+    pass
+
+
 def fine_tier(days_overdue):
     """Map days overdue to a fine tier label."""
     if not isinstance(days_overdue, int):
@@ -42,6 +47,26 @@ class Library:
     def total_available_copies(self):
         """Sum of available_copies across every book in the catalog."""
         return sum(book.available_copies for book in self.catalog.values())
+
+    def export_catalog(self, path):
+        """Write the book catalog to disk, one line per book.
+
+        Raises:
+            LibraryIOError: if the file cannot be written (wraps the
+            original OSError so callers never see the raw OSError).
+        """
+        try:
+            with open(path, "w") as f:
+                for book in self.catalog.values():
+                    line = "{},{},{}/{}\n".format(
+                        book.title, book.item_id,
+                        book.available_copies, book.total_copies,
+                    )
+                    f.write(line)
+        except OSError as e:
+            raise LibraryIOError(
+                "Failed to export catalog to '" + path + "': " + str(e)
+            ) from e
 
 
 def validate_isbn(isbn):
