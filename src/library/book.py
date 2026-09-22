@@ -1,10 +1,20 @@
 class Book:
-    """Represents a single book/item in the library catalog."""
+    """Represents a single book/item in the library catalog.
 
-    def __init__(self, title, item_id, author=None):
+    A Book may have multiple physical copies (total_copies). Borrowing a
+    copy reduces available_copies; returning a copy increases it back,
+    never past total_copies.
+    """
+
+    def __init__(self, title, item_id, author=None, total_copies=1):
         self.title = title
         self.item_id = item_id
         self.author = author
+        self.total_copies = total_copies
+        self.available_copies = total_copies
+
+        # Kept for backward compatibility with the original single-item
+        # borrow() flow used elsewhere in the codebase.
         self.status = "available"
         self.borrower = None
 

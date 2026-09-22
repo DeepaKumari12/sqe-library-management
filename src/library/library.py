@@ -16,12 +16,13 @@ def fine_tier(days_overdue):
 
 
 class Library:
-    """Tracks how many books each member currently has on loan."""
+    """Tracks member loans and the book catalog."""
 
     MAX_BOOKS_PER_MEMBER = 5
 
     def __init__(self):
         self.member_loans = {}
+        self.catalog = {}  # item_id/isbn -> Book
 
     def borrow_book(self, member_id, isbn):
         """Register a new loan for member_id."""
@@ -34,9 +35,15 @@ class Library:
         self.member_loans[member_id] = current + 1
         return self.member_loans[member_id]
 
+    def add_book(self, book):
+        """Add a Book to the catalog, keyed by its item_id/isbn."""
+        self.catalog[book.item_id] = book
+
+    def total_available_copies(self):
+        """Sum of available_copies across every book in the catalog."""
+        return sum(book.available_copies for book in self.catalog.values())
+
 
 def validate_isbn(isbn):
     """Validate that isbn is exactly 13 numeric digits."""
     return isinstance(isbn, str) and len(isbn) == 13 and isbn.isdigit()
-
-    
