@@ -37,3 +37,11 @@ def test_rank_books_ties_broken_by_title_alphabetically():
     library.add_book(zebra)
     library.add_book(apple)
     assert rank_books_by_popularity(library) == [apple, zebra]
+
+def test_rank_books_tie_break_ignores_letter_case():
+    library = Library()
+    upper = make_book("Zebra Tales", "ISBN-Z", borrow_count=2)
+    lower = make_book("apple stories", "ISBN-A", borrow_count=2)
+    library.add_book(upper)
+    library.add_book(lower)
+    assert rank_books_by_popularity(library) == [lower, upper]
