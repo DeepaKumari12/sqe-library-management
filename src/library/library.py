@@ -78,4 +78,5 @@ def validate_isbn(isbn):
 
 def rank_books_by_popularity(library):
     """Return books sorted by total times borrowed, descending."""
-    return list(library.catalog.values())
+    books = list(library.catalog.values())
+    return books
