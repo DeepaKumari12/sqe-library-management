@@ -12,6 +12,7 @@ class Book:
         self.author = author
         self.total_copies = total_copies
         self.available_copies = total_copies
+        self.borrow_count = 0
 
         # Kept for backward compatibility with the original single-item
         # borrow() flow used elsewhere in the codebase.
