@@ -11,40 +11,42 @@
 
 | Cycle | Description | Red Commit | Green Commit | Refactor Commit |
 |-------|-------------|------------|--------------|-----------------|
-| 1 | Empty catalog returns empty list | `<red-hash-1>` | `<green-hash-1>` | `<refactor-hash-1>` |
-| 2 | Single book returns that book | `<red-hash-2>` | `<green-hash-2>` | `<refactor-hash-2>` |
-| 3 | Descending sort by borrow count | `<red-hash-3>` | `<green-hash-3>` | `<refactor-hash-3>` |
-| 4 | Tie-breaking by title (alphabetical) | `<red-hash-4>` | `<green-hash-4>` | `<refactor-hash-4>` |
-| 5 | Edge case: book with zero borrows | `<red-hash-5>` | `<green-hash-5>` | `<refactor-hash-5>` |
+| 1 | Empty catalog returns empty list | `2616c2e` | `dbe1aa8` | *(none — trivial stage)* |
+| 2 | Single book returned in list | `6e2e4dc` | `eb09dbc` | `f06b85d` |
+| 3 | Descending sort by borrow count | `0bce034` | `0f80cec` | `2ae504f` |
+| 4 | Tie-break by title alphabetically | `0e161c6` | `4d03657` | `1827cff` |
+| 5 | Case-insensitive title tie-break | `2390cf2` | `0c03058` | `939931a` |
+
+**Full regression status:** 52 passed in 0.18s (all previous labs + Lab 8).
 
 ---
 
 ## Cycle Details
 
 ### Cycle 1 — Empty Catalog
-- **RED:** `test_rank_books_empty_catalog_returns_empty_list` — failed because `rank_books_by_popularity` did not exist.
-- **GREEN:** Added a stub returning `[]`.
+- **RED (`2616c2e`):** `test_rank_books_empty_catalog_returns_empty_list` — failed because `rank_books_by_popularity` did not exist.
+- **GREEN (`dbe1aa8`):** Added a stub returning `[]`.
 - **REFACTOR:** Nothing to refactor at this trivial stage.
 
 ### Cycle 2 — Single Book
-- **RED:** Test that a library with one book returns a list containing just that book.
-- **GREEN:** Minimal implementation returning `[book]` when catalog has one entry.
-- **REFACTOR:** Reviewed naming; no duplication yet.
+- **RED (`6e2e4dc`):** Test that a library with one book returns a list containing just that book.
+- **GREEN (`eb09dbc`):** Minimal implementation returning books from the catalog.
+- **REFACTOR (`f06b85d`):** Named the catalog books list for clarity.
 
 ### Cycle 3 — Descending Sort by Borrow Count
-- **RED:** Test with 3 books of distinct borrow counts; asserted highest-to-lowest order.
-- **GREEN:** Implemented `sorted(..., key=lambda b: b.borrow_count, reverse=True)`.
-- **REFACTOR:** Extracted repeated "build a book with this borrow count" logic into a pytest fixture.
+- **RED (`0bce034`):** Test with books of distinct borrow counts; asserted highest-to-lowest order.
+- **GREEN (`0f80cec`):** Implemented `sorted(..., key=lambda b: b.borrow_count, reverse=True)`.
+- **REFACTOR (`2ae504f`):** Extracted repeated "build a book with this borrow count" logic into a `make_book` pytest helper.
 
-### Cycle 4 — Tie-Breaking by Title
-- **RED:** Test with two books having identical borrow counts but different titles; asserted alphabetical order.
-- **GREEN:** Extended sort key to `(-borrow_count, title)`.
-- **REFACTOR:** Re-ran the **entire** test suite (all previous labs) — no regressions.
+### Cycle 4 — Tie-Break by Title
+- **RED (`0e161c6`):** Test with two books having identical borrow counts but different titles; asserted alphabetical order.
+- **GREEN (`4d03657`):** Extended sort key to sort by title on ties.
+- **REFACTOR (`1827cff`):** Extracted `_popularity_sort_key` for readability.
 
-### Cycle 5 — Edge Case: Zero-Borrow Book
-- **RED:** Test mixing a never-borrowed book with borrowed books; asserted it sorts last.
-- **GREEN:** Confirmed existing `(-borrow_count, title)` key already handles zero correctly.
-- **REFACTOR:** Cleaned up test helper; full suite re-run passed.
+### Cycle 5 — Case-Insensitive Tie-Break (Own Edge Case)
+- **RED (`2390cf2`):** Test where two books share borrow count but differ in title case (e.g. `"Zebra"` vs `"apple"`) — asserted alphabetical order ignoring case.
+- **GREEN (`0c03058`):** Initial fix for case-insensitive tie-break.
+- **REFACTOR (`939931a`):** Fixed `_popularity_sort_key` to return a proper `(-borrow_count, title.lower())` tuple — resolved `TypeError: '<' not supported between NoneType`.
 
 ---
 
