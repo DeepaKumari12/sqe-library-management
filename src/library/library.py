@@ -77,9 +77,8 @@ def validate_isbn(isbn):
 
 
 def _popularity_sort_key(book):
-    """Most borrowed first; ties broken by title A-Z."""
-    -book.borrow_count, book.title.lower()
-
+    """Sort key: highest borrow_count first, then title A-Z (case-insensitive)."""
+    return (-book.borrow_count, book.title.lower())
 
 def rank_books_by_popularity(library):
     """Return books sorted by total times borrowed, descending."""
