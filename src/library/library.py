@@ -72,3 +72,10 @@ class Library:
 def validate_isbn(isbn):
     """Validate that isbn is exactly 13 numeric digits."""
     return isinstance(isbn, str) and len(isbn) == 13 and isbn.isdigit()
+
+
+
+
+def rank_books_by_popularity(library):
+    """Return books sorted by total times borrowed, descending."""
+    return []
